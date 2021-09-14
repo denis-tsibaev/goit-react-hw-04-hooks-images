@@ -8,68 +8,66 @@ import Searchbar from './Searchbar';
 import Spinner from './Spinner';
 
 export default function App() {
-	const [query, setQuery] = useState('');
-	const [hits, setHits] = useState([]);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [modal, setModal] = useState(false);
-	const [modalImage, setModalImage] = useState('');
-	const [isloading, setIsloading] = useState(false);
-	const [error, setError] = useState(null);
-	
-	useEffect(() => { fetchImg() }, [query])
-	
-	const fetchImg = () => {
-		const option = { query, currentPage };
-		if (!query) return;
+    const [query, setQuery] = useState('');
+    const [hits, setHits] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [modal, setModal] = useState(false);
+    const [modalImage, setModalImage] = useState('');
+    const [isloading, setIsloading] = useState(false);
+    const [error, setError] = useState(null);
 
-		setIsloading(true);
+    useEffect(() => {
+        fetchImg();
+    }, [query]);
 
-		imageApi(option)
-			.then(result => {
-				setHits(prevState => [...prevState.hits, ...result])
-				setCurrentPage(prevState.currentPage + 1)
-			})
+    const fetchImg = () => {
+        const option = { query, currentPage };
+        if (!query) return;
 
-		window.scrollTo({
-			top: document.documentElement.scrollHeight,
-			behavior: 'smooth',
-		});
-                
-                .catch (setError({ error }))
-                .finally(() => {
-		setIsloading(false);
-	});
-}
+        setIsloading(true);
+
+        imageApi(option).then(result => {
+            setHits(prevState => [...prevState.hits, ...result]);
+            setCurrentPage(prevState => prevState.currentPage + 1);
+        });
+
+        window
+            .scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth',
+            })
+
+            .catch(setError({ error }))
+            .finally(() => {
+                setIsloading(false);
+            });
+    };
 
     const handleInputChange = data => {
-		setQuery(data.trim());
-		setCurrenPage(1);
-		setHits ([])
-    }
+        setQuery(data.trim());
+        setCurrenPage(1);
+        setHits([]);
+    };
 
-		
     const handleModalOPen = largeImage => {
-		setModal(true);
-		setModalImage(largeImage);
+        setModal(true);
+        setModalImage(largeImage);
         window.addEventListener('keydown', this.handleModalEscape);
-	}
+    };
 
-	    const handleBackdropClick = e => {
+    const handleBackdropClick = e => {
         if (e.target.classList.contains('Overlay')) resetModal();
         return;
-	};
-	
-	    const handleModalEscape = e => {
-        if (e.keyCode === 27) resetModal();
-	};
-	
-	    const resetModal = () => {
-			setModal(false);
-			setModalImage('');
-		}
-    
+    };
 
-    
+    const handleModalEscape = e => {
+        if (e.keyCode === 27) resetModal();
+    };
+
+    const resetModal = () => {
+        setModal(false);
+        setModalImage('');
+    };
 
     return (
         <>
