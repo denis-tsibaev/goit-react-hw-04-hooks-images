@@ -7,12 +7,12 @@ import Modal from './Modal';
 import Searchbar from './Searchbar';
 import Spinner from './Spinner';
 
-const Status = {
-    IDLE: 'idle',
-    PENDING: 'pending',
-    RESOLVED: 'resolved',
-    REJECTED: 'rejected',
-};
+// const Status = {
+//     IDLE: 'idle',
+//     PENDING: 'pending',
+//     RESOLVED: 'resolved',
+//     REJECTED: 'rejected',
+// };
 
 export default function App() {
     const [query, setQuery] = useState('');
@@ -22,7 +22,7 @@ export default function App() {
     const [modalImage, setModalImage] = useState({});
     const [isloading, setIsloading] = useState(false);
     const [error, setError] = useState(null);
-    const [status, setStatus] = useState(Status.IDLE);
+    // const [status, setStatus] = useState(Status.IDLE);
 
     const handleInputChange = e => {
         setQuery(e.target.value.trim());
@@ -55,7 +55,7 @@ export default function App() {
 
     useEffect(() => {
         fetchImg();
-    }, [query]);
+    });
 
     const handleModalOPen = largeImage => {
         setModal(true);
@@ -80,7 +80,7 @@ export default function App() {
     return (
         <>
             <Container>
-                <Searchbar onSubmit={handleInputChange} />
+                <Searchbar onChange={handleInputChange} />
 
                 {query && (
                     <ImageGallery hits={hits} onImageClick={handleModalOPen} />
@@ -96,7 +96,7 @@ export default function App() {
                     <Modal
                         onClose={handleModalEscape}
                         handleBackdropClick={handleBackdropClick}
-                        modalImage={modalImage}
+                        setModalImage={setModalImage}
                     />
                 )}
             </Container>

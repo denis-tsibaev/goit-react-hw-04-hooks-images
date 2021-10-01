@@ -1,8 +1,8 @@
 import '../styles.css';
 
-const Searchbar = ({ onSubmit, onChange }) => {
+const Searchbar = ({ onChange }) => {
     return (
-        <header className="Searchbar" onSubmit={this.handleSubmit}>
+        <header className="Searchbar">
             <form className="SearchForm">
                 <button type="submit" className="SearchForm-button">
                     <span className="SearchForm-button-label">Search</span>
