@@ -7,20 +7,30 @@ import Modal from './Modal';
 import Searchbar from './Searchbar';
 import Spinner from './Spinner';
 
+const Status = {
+    IDLE: 'idle',
+    PENDING: 'pending',
+    RESOLVED: 'resolved',
+    REJECTED: 'rejected',
+};
+
 export default function App() {
     const [query, setQuery] = useState('');
     const [hits, setHits] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [modal, setModal] = useState(false);
-    const [modalImage, setModalImage] = useState('');
+    const [modalImage, setModalImage] = useState({});
     const [isloading, setIsloading] = useState(false);
     const [error, setError] = useState(null);
+    const [status, setStatus] = useState(Status.IDLE);
 
-    useEffect(() => {
-        fetchImg();
-    }, [query]);
+    const handleInputChange = e => {
+        setQuery(e.target.value.trim());
+        setHits([]);
+        setCurrentPage(1);
+    };
 
-    const fetchImg = () => {
+    const fetchImg = query => {
         const option = { query, currentPage };
         if (!query) return;
 
@@ -43,11 +53,9 @@ export default function App() {
             });
     };
 
-    const handleInputChange = data => {
-        setQuery(data.trim());
-        setCurrenPage(1);
-        setHits([]);
-    };
+    useEffect(() => {
+        fetchImg();
+    }, [query]);
 
     const handleModalOPen = largeImage => {
         setModal(true);
@@ -82,15 +90,14 @@ export default function App() {
                     <Button onLoadClick={fetchImg} text="Load more" />
                 )}
 
-                {isLoading && <Spinner />}
+                {isloading && <Spinner />}
 
                 {modal && (
                     <Modal
                         onClose={handleModalEscape}
                         handleBackdropClick={handleBackdropClick}
-                    >
-                        <img src={modalImage} alt="" />
-                    </Modal>
+                        modalImage={modalImage}
+                    />
                 )}
             </Container>
         </>
