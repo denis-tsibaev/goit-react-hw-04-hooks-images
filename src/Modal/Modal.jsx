@@ -11,7 +11,7 @@ const Modal = ({ onClose, handleBackdropClick, setModalImage }) => {
             onClick={handleBackdropClick}
         >
             <div className="Modal">
-                <img src={setModalImage} />
+                <img src={setModalImage} alt="" />
             </div>
         </div>,
         modalRoot,
