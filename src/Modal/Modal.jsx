@@ -3,7 +3,7 @@ import './Modal.scss';
 
 const modalRoot = document.querySelector('#modal-root');
 
-const Modal = ({ onClose, handleBackdropClick, setModalImage }) => {
+const Modal = ({ onClose, handleBackdropClick, modalImage }) => {
     return createPortal(
         <div
             className="Overlay"
@@ -11,7 +11,7 @@ const Modal = ({ onClose, handleBackdropClick, setModalImage }) => {
             onClick={handleBackdropClick}
         >
             <div className="Modal">
-                <img src={setModalImage} alt="" />
+                <img src={modalImage} alt="" />
             </div>
         </div>,
         modalRoot,

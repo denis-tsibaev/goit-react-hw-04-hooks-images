@@ -37,7 +37,7 @@ export default function App() {
         setIsloading(true);
 
         imageApi(option).then(result => {
-            setHits(prevState => [...prevState.hits, ...result]);
+            setHits(prevState => [...prevState, ...result]);
             setCurrentPage(prevState => prevState.currentPage + 1);
         });
 
@@ -60,7 +60,7 @@ export default function App() {
     const handleModalOPen = largeImage => {
         setModal(true);
         setModalImage(largeImage);
-        window.addEventListener('keydown', this.handleModalEscape);
+        window.addEventListener('keydown', handleModalEscape);
     };
 
     const handleBackdropClick = e => {
@@ -96,7 +96,7 @@ export default function App() {
                     <Modal
                         onClose={handleModalEscape}
                         handleBackdropClick={handleBackdropClick}
-                        setModalImage={setModalImage}
+                        modalImage={modalImage}
                     />
                 )}
             </Container>
